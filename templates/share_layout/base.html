@@ -1,0 +1,88 @@
+{% load static %}
+{% load cache %}
+{% load compress %}
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="zh-CN" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="zh-CN" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+<![endif]-->
+<!--[if !(IE 7) & !(IE 8)]><!-->
+<html lang="zh-CN" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+<!--<![endif]-->
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    {% block header %}
+    {% endblock %}
+    <link rel="profile" href="http://gmpg.org/xfn/11"/>
+
+    <!--[if lt IE 9]>
+    <script src="{% static 'blog/js/html5.js' %}" type="text/javascript"></script>
+    <![endif]-->
+
+    <link rel='dns-prefetch' href='//fonts.googleapis.com'/>
+    <link rel="alternate" type="application/rss+xml" title="{{ SITE_NAME }} &raquo; Feed"
+          href="{{ SITE_BASE_URL }}feed"/>
+
+    <link rel='stylesheet' id='twentytwelve-fonts-css'
+          href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&#038;subset=latin,latin-ext'
+          type='text/css' media='all'/>
+    {% compress css %}
+        <link rel='stylesheet' id='twentytwelve-style-css' href='{% static 'blog/css/style.css' %}' type='text/css'
+              media='all'/>
+        <link href="{% static 'blog/css/oauth_style.css' %}" rel="stylesheet">
+        {% comment %}<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>{% endcomment %}
+        <!--[if lt IE 9]>
+        <link rel='stylesheet' id='twentytwelve-ie-css'  href='{% static 'blog/css/ie.css' %}' type='text/css' media='all' />
+        <![endif]-->
+        <link rel="stylesheet" href="{% static 'pygments/default.css' %}"/>
+        <link rel="stylesheet" href="{% static 'blog/css/nprogress.css' %}">
+        {% block compress_css %}
+        {% endblock %}
+    {% endcompress %}
+</head>
+
+<body class="home blog custom-font-enabled">
+<div id="page" class="hfeed site">
+    <header id="masthead" class="site-header" role="banner">
+        <hgroup>
+            <h1 class="site-title"><a href="{{ SITE_BASE_URL }}" title="{{ SITE_NAME }}" rel="home">{{ SITE_NAME }}</a>
+            </h1>
+            <h2 class="site-description">{{ SITE_DESCRIPTION }}</h2>
+        </hgroup>
+
+        {% cache 36000 nav %}
+            {% include 'share_layout/nav.html' %}
+        {% endcache %}
+
+    </header><!-- #masthead -->
+    <div id="main" class="wrapper">
+
+        {% block content %}
+        {% endblock %}
+
+        {% cache 36000 sidebar request.user.username %}
+            {% block sidebar %}
+            {% endblock %}
+        {% endcache %}
+
+    </div><!-- #main .wrapper -->
+    {% include 'share_layout/footer.html' %}
+</div><!-- #page -->
+
+</body>
+<footer>
+    {% compress js %}
+        <script type="text/javascript" src="{% static 'blog/js/jquery-3.1.1.js' %}"></script>
+        <script type="text/javascript" src="{% static 'blog/js/nprogress.js' %}"></script>
+        <script src="{% static 'blog/js/blog.js' %}" type="application/javascript"></script>
+        <script src="{% static 'blog/js/navigation.js' %}" type="application/javascript"></script>
+        {% block compress_js %}
+        {% endblock %}
+    {% endcompress %}
+    {% block footer %}
+    {% endblock %}
+</footer>
+</html>

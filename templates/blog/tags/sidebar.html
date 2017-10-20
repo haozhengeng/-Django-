@@ -1,0 +1,115 @@
+<div id="secondary" class="widget-area" role="complementary">
+    <aside id="search-2" class="widget widget_search">
+        <form role="search" method="get" id="searchform" class="searchform" action="/search">
+            <div>
+                <label class="screen-reader-text" for="s">搜索：</label>
+                <input type="text" value="" name="q" id="q"/>
+                <input type="submit" id="searchsubmit" value="搜索"/>
+            </div>
+        </form>
+    </aside>
+    {% if most_read_articles %}
+
+        <aside id="views-4" class="widget widget_views"><h3 class="widget-title">Views</h3>
+            <ul>
+                {% for a in most_read_articles %}
+                    <li>
+                        <a href="{{ a.get_absolute_url }}" title="{{ a.title }}">
+                            {{ a.title }}
+                        </a> - {{ a.views }} views
+                    </li>
+                {% endfor %}
+            </ul>
+
+        </aside>
+    {% endif %}
+    {% if sidebar_categorys %}
+        <aside id="su_siloed_terms-2" class="widget widget_su_siloed_terms"><h3 class="widget-title">分类目录</h3>
+            <ul>
+                {% for c in sidebar_categorys %}
+                    <li class="cat-item cat-item-184"><a href={{ c.get_absolute_url }}>{{ c.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </aside>
+    {% endif %}
+    {% if sidebar_comments %}
+        <aside id="ds-recent-comments-4" class="widget ds-widget-recent-comments"><h3 class="widget-title">近期评论</h3>
+            {% comment %}<ul class="ds-recent-comments" data-num-items="5" data-show-avatars="1" data-show-time="1"
+            data-show-title="1" data-show-admin="1" data-avatar-size="30" data-excerpt-length="70"></ul>{% endcomment %}
+            <ul id="recentcomments">
+                {% for c in sidebar_comments %}
+                    <li class="recentcomments">
+                <span class="comment-author-link">
+                    {{ c.author.username }}</span>
+                        发表在《
+                        <a href="{{ c.article.get_absolute_url }}">{{ c.article.title }}</a>》
+                    </li>
+                {% endfor %}
+            </ul>
+        </aside>
+    {% endif %}
+    {% if recent_articles %}
+        <aside id="recent-posts-2" class="widget widget_recent_entries"><h3 class="widget-title">近期文章</h3>
+            <ul>
+
+                {% for a in  recent_articles %}
+                    <li><a href="{{ a.get_absolute_url }}" title="{{ a.title }}">
+                        {{ a.title }}
+                    </a></li>
+                {% endfor %}
+            </ul>
+        </aside>
+    {% endif %}
+    {% if sidabar_links %}
+        <aside id="linkcat-0" class="widget widget_links"><h3 class="widget-title">书签</h3>
+            <ul class='xoxo blogroll'>
+                {% for l in sidabar_links %}
+                    <li>
+                        <a href="{{ l.link }}" target="_blank" title="{{ l.name }}">{{ l.name }}</a>
+                    </li>
+                {% endfor %}
+
+            </ul>
+        </aside>
+    {% endif %}
+    {% if show_adsense %}
+        {% include 'share_layout/adsense.html' %}
+    {% endif %}
+    {% if sidebar_tags %}
+        <aside id="tag_cloud-2" class="widget widget_tag_cloud"><h3 class="widget-title">标签云</h3>
+            <div class="tagcloud">
+                {% for tag,count,size in sidebar_tags %}
+                    <a href="{{ tag.get_absolute_url }}"
+                       class="tag-link-{{ tag.id }} tag-link-position-{{ tag.id }}"
+                       style="font-size: {{ size }}pt;" title="{{ count }}个话题"> {{ tag.name }}
+                    </a>
+                {% endfor %}
+            </div>
+        </aside>
+    {% endif %}
+    <aside id="text-2" class="widget widget_text"><h3 class="widget-title">欢迎您star或者fork本站源代码</h3>
+        <div class="textwidget">
+
+            <p><a href="https://github.com/liangliangyy/DjangoBlog" rel="nofollow"><img
+                    src="https://img.shields.io/github/stars/liangliangyy/djangoblog.svg?style=social&amp;label=Star"
+                    alt="GitHub stars"></a> <a href="https://github.com/liangliangyy/DjangoBlog" rel="nofollow"><img
+                    src="https://img.shields.io/github/forks/liangliangyy/djangoblog.svg?style=social&amp;label=Fork"
+                    alt="GitHub forks"></a></p>
+        </div>
+    </aside>
+    <aside id="meta-2" class="widget widget_meta"><h3 class="widget-title">功能</h3>
+        <ul>
+            <li><a href="{{ SITE_BASE_URL }}/admin/">管理站点</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url "account:logout" %}">登出</a>
+                </li>
+
+            {% else %}
+                <li><a href="{% url "account:login" %}">登录</a>
+            {% endif %}
+
+        </ul>
+    </aside>
+    <div id="rocket" class="show" title="点我返回顶部"></div>
+</div><!-- #secondary -->
