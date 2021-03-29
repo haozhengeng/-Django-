@@ -15,7 +15,7 @@ mistune==0.7.4
 olefile==0.44
 packaging==16.8
 Pillow==4.2.1
-Pygments==2.2.0
+Pygments==2.7.4
 PyMySQL==0.7.11
 pyparsing==2.2.0
 python-slugify==1.2.4
