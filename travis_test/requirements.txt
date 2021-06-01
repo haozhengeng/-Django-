@@ -26,7 +26,7 @@ rjsmin==1.0.12
 six==1.10.0
 sqlparse==0.2.3
 Unidecode==0.4.21
-urllib3==1.22
+urllib3==1.26.5
 webencodings==0.5.1
 WeRoBot==1.1.1
 Whoosh==2.7.4
